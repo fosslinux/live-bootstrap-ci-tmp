@@ -1,0 +1,19 @@
+#cloud-config
+users:
+  - name: build
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: kvm
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+XJB9UQV7qGvGaeAZtreCPqHQ6ApAi2BGZW6zSIQyB
+disable_root: true
+packages:
+  - curl
+  - expect
+  - reptyr
+  - rsync
+  - git
+  - qemu
+  - qemu-system-x86
+package_update: true
+package_upgrade: true
