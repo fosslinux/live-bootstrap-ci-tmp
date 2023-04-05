@@ -97,7 +97,6 @@ src_configure() {
         --disable-plugins \
         --enable-threads \
         --enable-64-bit-bfd \
-        --enable-gold \
         --enable-ld=default \
         --enable-install-libiberty \
         --enable-deterministic-archives \
