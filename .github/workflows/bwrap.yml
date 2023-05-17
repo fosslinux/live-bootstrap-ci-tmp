@@ -123,3 +123,28 @@ jobs:
         with:
           name: packages
           path: tmp/sysa/sysc_image/usr/src/repo/**
+
+  gen_changed:
+    name: Generate a list of changed packages
+    needs: sysc2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get our packages
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
+      - name: Move our packages
+        run: mkdir new && mv *.tar* new/
+      - name: Get before-PR packages
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
+      - name: Extract before-PR packages
+        run: mkdir old && mv *.tar* old/
+      - name: Generate the list
+        run: diff -Nur old new | sed "s:Binary.*/::" | sed "s/ .*//" > pkglist-diff.txt
+      - name: Upload the list
+        uses: actions/upload-artifact@v3
+        with:
+          name: pkglist-diff.txt
+          path: pkglist-diff.txt
