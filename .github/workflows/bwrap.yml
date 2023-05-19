@@ -133,14 +133,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: packages
-      - name: Move our packages
-        run: mkdir new && mv *.tar* new/
+          path: new/
       - name: Get before-PR packages
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: packages
-      - name: Extract before-PR packages
-        run: mkdir old && mv *.tar* old/
+          commit: ${{ github.event.pull_request.base.sha }}
+          path: old/
       - name: Generate the list
         run: diff -Nur old new | sed "s:Binary.*/::" | sed "s/ .*//" > pkglist-diff.txt
       - name: Upload the list

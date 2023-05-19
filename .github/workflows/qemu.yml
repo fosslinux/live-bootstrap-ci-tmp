@@ -68,11 +68,13 @@ jobs:
         with:
           name: pkglist-diff.txt
       - name: Get packages
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: packages
+          commit: ${{ github.event.pull_request.head.sha }}
+          path: repo/
       - name: Create repo with unchanged packages
-        run: mkdir repo && tar -f packages.tar -C repo -x && cat pkglist-diff.txt | xargs -I{} rm repo/{}
+        run: cat pkglist-diff.txt | xargs -I{} rm repo/{}
       - name: Install dependencies
         run: sudo apt install pwgen
       - name: Install doctl
