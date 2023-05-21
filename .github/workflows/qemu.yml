@@ -64,15 +64,18 @@ jobs:
       - name: Get kernel binary
         run: curl -o kernel http://0x0.st/HHhk.bin
       - name: Get pkg diff list
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: pkglist-diff.txt
+          pr: ${{ github.event.issue.number }}
+          workflow: bwrap.yml
       - name: Get packages
         uses: dawidd6/action-download-artifact@v2
         with:
           name: packages
-          commit: ${{ github.event.pull_request.head.sha }}
+          pr: ${{ github.event.issue.number }}
           path: repo/
+          workflow: bwrap.yml
       - name: Create repo with unchanged packages
         run: cat pkglist-diff.txt | xargs -I{} rm repo/{}
       - name: Install dependencies
