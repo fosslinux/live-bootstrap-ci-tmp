@@ -60,14 +60,14 @@ class SysA(SysGeneral):
 
         self.sysc(create_initramfs)
 
+        if self.repo_path:
+            repo_dir = os.path.join(self.tmp_dir, 'usr', 'src', 'repo-preseeded')
+            shutil.copytree(self.repo_path, repo_dir)
+
         if kernel_bootstrap:
             self.create_fiwix_file_list()
             self.create_builder_hex0_disk_image(os.path.join(self.tmp_dir, 'sysa.img'))
             return
-
-        if self.repo_path:
-            repo_dir = os.path.join(self.tmp_dir, 'usr', 'src', 'repo-preseeded')
-            shutil.copytree(self.repo_path, repo_dir)
 
         if create_initramfs:
             self.make_initramfs()
