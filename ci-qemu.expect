@@ -6,7 +6,7 @@
 
 set timeout -1
 
-spawn python3 rootfs.py --qemu --qemu-cmd qemu-system-x86_64 --qemu-ram 3500 --preserve --cores 2
+spawn python3 rootfs.py --qemu --qemu-cmd qemu-system-x86_64 --qemu-ram 3500 --preserve --cores 2 --repo repo
 
 expect {
     "WARNING: the last user process has exited. The kernel will stop itself." {
